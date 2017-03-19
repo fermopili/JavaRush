@@ -13,7 +13,6 @@ public class Solution {
         Thread violin = new Thread(new Violin("Player"));
         violin.start();
     }
-
     public static void sleepNSeconds(int n) {
         try {
             Thread.sleep(n * delay);
@@ -21,13 +20,11 @@ public class Solution {
             e.printStackTrace();
         }
     }
-
     public interface MusicalInstrument extends Runnable {
         Date startPlaying();
 
         Date stopPlaying();
     }
-
     public static class Violin implements MusicalInstrument{
         private String owner;
 
@@ -39,13 +36,10 @@ public class Solution {
             System.out.println(this.owner + " starts playing");
             return new Date();
         }
-
         public Date stopPlaying() {
             System.out.println(this.owner + " stops playing");
             return new Date();
         }
-
-
         @Override
         public void run()
             {

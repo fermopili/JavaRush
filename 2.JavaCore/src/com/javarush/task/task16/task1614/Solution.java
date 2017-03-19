@@ -18,22 +18,18 @@ public class Solution
                     list.add("Строка " + i);
                 }
         }
-
     public static void main(String[] args) throws InterruptedException
         {
         Thread t = new Thread(new Countdown(3), "Countdown");
         t.start();
         }
-
     public static class Countdown implements Runnable
     {
         private int countFrom;
-
         public Countdown(int countFrom)
             {
             this.countFrom = countFrom;
             }
-
         public void run()
             {
             try
@@ -47,17 +43,12 @@ public class Solution
                 {
                 }
             }
-
         public void printCountdown() throws InterruptedException
             {
             //add your code here - добавь код тут
             Thread.sleep(500);
-            //for (int i = list.size() - 1; i >= 0; i--)
-           //     {
             countFrom--;
                     System.out.println(list.get(countFrom));
-             //   }
-
             }
     }
 }

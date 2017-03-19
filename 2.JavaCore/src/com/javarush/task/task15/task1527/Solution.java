@@ -54,10 +54,6 @@ public class Solution
                 catch(Exception e){alert(s);}           //если не парсится, то передаю строкой
             }
         }
-
-
-
-
         reader.close();
         }
 

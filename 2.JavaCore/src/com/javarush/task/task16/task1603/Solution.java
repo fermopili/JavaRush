@@ -18,9 +18,7 @@ public class Solution {
     list.add(new Thread(new SpecialThread()));
     list.add(new Thread(new SpecialThread()));
     list.add(new Thread(new SpecialThread()));
-
     }
-
     public static class SpecialThread implements Runnable {
         public void run() {
             System.out.println("it's a run method inside SpecialThread");

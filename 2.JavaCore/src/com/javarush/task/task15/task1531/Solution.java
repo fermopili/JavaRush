@@ -14,11 +14,12 @@ public class Solution
     public static void main(String[] args) throws IOException
         {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        int input = Integer.parseInt(reader.readLine());
+        int input=0;
+        //    int input = Integer.parseInt(reader.readLine());
         reader.close();
-
-        System.out.println(factorial(input));
+//for(int i=0;i<10;i++)
+     //   System.out.println((input+0)+"! =    "+factorialBigDecimal(new BigDecimal(3)));
+        System.out.println((input+0)+"! =    "+factorialBigDecimal2(3));
         }
 
     public static String factorial(int n)
@@ -32,4 +33,26 @@ public class Solution
 
         return f.toString();
         }
+
+    public static BigDecimal factorialBigDecimal(BigDecimal n)
+        {
+        if (n.equals("0"))
+            return new BigDecimal(1);
+        if (n.equals("1"))
+            return new BigDecimal(1);
+
+        BigDecimal n_1=n.subtract( new BigDecimal(1));
+
+        return   n.multiply(factorialBigDecimal(n_1));
+
+        }
+    public static int factorialBigDecimal2(int n)
+        {
+        if (n==0) return 1;
+        if (n==1) return 1;
+
+        return   n*factorialBigDecimal2(n-1);
+
+        }
+
 }

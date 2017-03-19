@@ -20,15 +20,11 @@ public class Solution
     public static class MarkTwainBook extends Book
     {
         private String title;
-       // private String name;
-
         public MarkTwainBook(String title)
             {
             super("Mark Twain");
             this.title = title;
-           // this.name = "Mark Twain";
             }
-
         @Override
         public MarkTwainBook getBook()
             {
@@ -50,7 +46,6 @@ public class Solution
             {
             super("Agatha Christie");
             this.title = title;
-        //    this.name ="Agatha Christie";
             }
 
         @Override

@@ -14,7 +14,6 @@ public class Solution
         Plane plane2 = new Plane("Самолет #2");
         Plane plane3 = new Plane("Самолет #3");
         }
-
     private static void waiting()
         {
         //add your code here - добавь код тут
@@ -26,7 +25,6 @@ public class Solution
             {
             }
         }
-
     private static void takingOff()
         {
         //fix this method - исправь этот метод
@@ -38,7 +36,6 @@ public class Solution
             {
             }
         }
-
     public static class Plane extends Thread
     {
         public Plane(String name)
@@ -68,7 +65,6 @@ public class Solution
                 }
             }
     }
-
     public static class Runway
     { //взлетная полоса
         private Thread t;
@@ -85,7 +81,6 @@ public class Solution
                     this.t = t;
                 }
             }
-
         public boolean trySetTakingOffPlane(Thread t)
             {
             synchronized (this)

@@ -15,13 +15,11 @@ public class Solution {
         firstThread.join();
         secondThread.start();
     }
-
     public static void printList(List<String> list, String threadName) {
         for (String item : list) {
             System.out.println(String.format("%s : %s", threadName, item));
         }
     }
-
     public static List<String> getList(int name) {
         List<String> result = new ArrayList<String>();
         if (name < 1) {
@@ -32,7 +30,6 @@ public class Solution {
         }
         return result;
     }
-
     public static class PrintListThread extends Thread {
         public PrintListThread(String name) {
             super(name);
