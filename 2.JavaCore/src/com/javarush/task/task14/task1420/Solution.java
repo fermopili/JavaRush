@@ -13,31 +13,16 @@ public class Solution
     public static void main(String[] args) throws Exception
         {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-      /*  int            a      = Integer.parseInt(reader.readLine());
-        if (a <= 0) throw new NumberFormatException();
-        int b = Integer.parseInt(reader.readLine());
-        if (b <= 0) throw new NumberFormatException();
-        while (a != 0 && b != 0)
+        int v1 = Integer.parseInt(reader.readLine());
+        if (v1 <= 0) throw new NumberFormatException();
+        int v2 = Integer.parseInt(reader.readLine());
+        if (v2 <= 0) throw new NumberFormatException();
+        while (v2 != 0)
             {
-                if (a > b) a = a % b;
-                else if (b > a) b = b % a;
+                int tmp = v1 % v2;
+                v1 = v2;
+                v2 = tmp;
             }
-        System.out.println(a + b);
-        reader.close();
-        }*/
-
-        int FirstNum = Integer.parseInt(reader.readLine());
-        if (FirstNum <= 0) throw new NumberFormatException();
-        int SecondNum = Integer.parseInt(reader.readLine());
-        if (SecondNum <= 0) throw new NumberFormatException();
-        while (SecondNum != 0)
-            {
-                int tmp = FirstNum % SecondNum;
-                FirstNum = SecondNum;
-                SecondNum = tmp;
-            }
-        System.out.println(FirstNum);
+        System.out.println(v1);
         }
-
-
 }

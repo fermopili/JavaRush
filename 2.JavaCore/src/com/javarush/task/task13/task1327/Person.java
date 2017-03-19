@@ -15,7 +15,6 @@ public class Person implements  RepkaItem
         {
         return name;
         }
-
     public void pull(Person first)
         {
         System.out.println( name+ " за " + first.namePadezh);
