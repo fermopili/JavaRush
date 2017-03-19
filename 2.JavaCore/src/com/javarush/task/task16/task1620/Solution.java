@@ -52,16 +52,13 @@ public class Solution
             }
 
         public void run()
-            {
-            //fix 2 variables - исправь 2 переменных
+            {//fix 2 variables - исправь 2 переменных
             boolean isCurrentThreadInterrupted =   currentThread().isInterrupted();
             String  threadName                 = currentThread().getName();
-
             try
                 {
                     while (!isCurrentThreadInterrupted)
                         {
-
                             System.out.println("Объект " + commonResource + ", нить " + threadName);
                             Thread.sleep(1000);
                         }
