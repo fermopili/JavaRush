@@ -8,40 +8,63 @@ import java.io.InputStreamReader;
 Родственные связи кошек
 */
 
-public class Solution {
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+public class Solution
+{
+    public static void main(String[] args) throws IOException
+        {
+        BufferedReader reader = new BufferedReader (new InputStreamReader (System.in));
 
-        String motherName = reader.readLine();
-        Cat catMother = new Cat(motherName);
-
-        String daughterName = reader.readLine();
-        Cat catDaughter = new Cat(daughterName, catMother);
-
-        System.out.println(catMother);
-        System.out.println(catDaughter);
-    }
-
-    public static class Cat {
+        String d    = reader.readLine ( );//"дедушка Вася";
+        String b    = reader.readLine ( );//"бабушка Мурка";
+        String p    = reader.readLine ( );//"папа Котофей";
+        String m    = reader.readLine ( );//"мама Василиса";
+        String s    = reader.readLine ( );//"сын Мурчик";
+        String g    = reader.readLine ( );//"дочь Пушинка";
+        Cat    catD = new Cat (d);
+        Cat    catB = new Cat (b);
+        Cat    catP = new Cat (p, catD, null);
+        Cat    catM = new Cat (m, null, catB);
+        Cat    catS = new Cat (s, catP, catM);
+        Cat    catG = new Cat (g, catP, catM);
+        System.out.println (catD);
+        System.out.println (catB);
+        System.out.println (catP);
+        System.out.println (catM);
+        System.out.println (catS);
+        System.out.println (catG);
+        }
+    public static class Cat
+    {
         private String name;
-        private Cat parent;
+        private Cat    parentP;
+        private Cat    parentM;
 
-        Cat(String name) {
+        Cat(String name)
+            {
             this.name = name;
-        }
+            }
 
-        Cat(String name, Cat parent) {
+        Cat(String name, Cat parentP, Cat parentM)
+            {
             this.name = name;
-            this.parent = parent;
-        }
+            this.parentP = parentP;
+            this.parentM = parentM;
+            }
 
         @Override
-        public String toString() {
-            if (parent == null)
-                return "Cat name is " + name + ", no mother ";
+        public String toString()
+            {
+            String ret = "Cat name is " + name;
+            if (parentM == null)
+                ret = ret + ", no mother ";
             else
-                return "Cat name is " + name + ", mother is " + parent.name;
-        }
+                ret = ret + ", mother is " + parentM.name;
+            if (parentP == null)
+                ret = ret + ", no father ";
+            else
+                ret = ret + ", father is " + parentP.name;
+            return ret;
+            }
     }
 
 }
