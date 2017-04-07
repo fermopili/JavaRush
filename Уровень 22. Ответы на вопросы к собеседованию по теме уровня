@@ -1,0 +1,103 @@
+ Уровень 22. Ответы на вопросы к собеседованию по теме уровня.
+
+    Блог им. zor07
+        level22, конспект, вопросы к собеседованию	
+
+1. Как правильно сравнить две строки в Java?
+Метод equals проверяет – совпадают ли строки.
+
+boolean equals (Object o)
+String s = "cat";
+boolean test1 = s.equals("cat");//true
+boolean test2 = s.equals("Cat");//false
+boolean test3 = s.equals("c"+"a"+"t");//true
+
+
+
+2. Как правильно сравнить две строки в Java игнорируя регистр букв?
+Метод equalsIgnoreCase – совпадают ли строки, игнорируя регистр букв.
+
+boolean equalsIgnoreCase (String str)
+String s = "cat";
+boolean test1 = s.equalsIgnoreCase("cat");//true
+boolean test2 = s.equalsIgnoreCase("Cat");//true
+boolean test3 = s.equalsIgnoreCase("cAT");//true
+
+
+
+3. Как отсортировать список строк в алфавитном порядке?
+Используя метод Collections.sort().
+
+ArrayList<String> list = new ArrayList<>();
+list.add("zas");
+list.add("fas");
+list.add("sd");
+list.add("asdg");
+Collections.sort(list);
+
+
+
+4. В какой кодировке хранятся строки в Java?
+Строки в java хранятся в Unicode.
+
+5. Как преобразовать строку в кодировку Windows-1251?
+
+String utf8 = "text";
+byte[] bytes1251 = utf8.getBytes("windows-1251");
+String win1251 = new String(bytes1251,"windows-1251");
+
+
+
+6. Как разбить строку на отдельные слова?
+а) String[] split(String regex)
+
+б) StringTokenizer:
+
+String s = "Good news everyone!";
+
+StringTokenizer tokenizer = 
+   new StringTokenizer(s,"ne");
+while (tokenizer.hasMoreTokens())
+{
+ String token = tokenizer.nextToken();
+ System.out.println(token);
+}
+
+
+
+7. Как развернуть строку задом наперед?
+
+String s = "Bender";
+StringBuilder s2 = new StringBuilder(s);
+s2.reverse(); //будет "redneB";
+
+
+
+8. Что происходит, когда мы пишем «A»+«b»+«C»?
+Примерно следующее:
+
+new StringBuilder().append("A").append("b").append("C").toString();
+
+
+
+9. Что такое mutable и immutable типы?
+Объекты, которые после их создания изменить нельзя, называются неизменяемыми или immutable.
+Объекты, которые после создания можно изменить, называются изменяемыми или mutable.
+
+10. Что дает типу String то, что его сделали immutable?
+а) Безопасность.
+String широко используется, как параметр для многих классов Java, в частности для открытия сетевых 
+соединений, подключений к БД, открытию файлов и пр. И если бы строка изменялась, то мы могли
+ получить доступ к объекту (файлу например), на который мы имеем право, затем изменить строку 
+ с именем (случайно или намеренно) и получить доступ уже к другому файлу.
+
+Так же String используется в механизме загрузки файлов, и это — фундаментальный аспект.
+ И если бы строка изменялась, то запрос на загрузку «java.io.Writer» мог бы быть изменён на 
+ «DiskErasingWriter».
+
+б) Hashcode
+Из-за того, что строка не изменяется, она кэширует свой хэшкод и не вычисляет его каждый раз,
+ когда мы его вызываем, что делает строку очень быстрой как ключ для hashmap.
+
+в) Многопоточность
+immutable делает экземпляры строк потокобезопасными. 
