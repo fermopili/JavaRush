@@ -7,18 +7,15 @@ public class Solution
     public static void main(String[] args)
         {
         TestedThread commonThread = new TestedThread (handler);
-
         Thread threadA = new Thread (commonThread, "Нить 1");
         Thread threadB = new Thread (commonThread, "Нить 2");
         threadA.setUncaughtExceptionHandler (handler);// обработчик ошибки не передается
         threadB.setUncaughtExceptionHandler (handler);// нужно передать отдельно
         threadA.start ( );
         threadB.start ( );
-
         threadA.interrupt ( );
         threadB.interrupt ( );
         }
-
     public static class TestedThread extends Thread
     {
         public TestedThread(Thread.UncaughtExceptionHandler handler)
@@ -26,7 +23,6 @@ public class Solution
             setUncaughtExceptionHandler (handler);
             start ( );
             }
-
         public void run()
             {
             try
@@ -39,7 +35,6 @@ public class Solution
                 }
             }
     }
-
     public static class OurUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
     {
         @Override
