@@ -11,22 +11,24 @@ import java.util.List;
  */
 public class UsersView implements View
 {
-
-  //  Метод refresh класса UsersView должен быть реализован согласно условию.
+    //  Метод refresh класса UsersView должен быть реализован согласно условию.
     private Controller controller;
-    private ModelData modelData;
+    private ModelData  modelData;
+
     @Override
     public void refresh(ModelData modelData)
         {
-         this.modelData=modelData;
-         System.out.println ("All users:");
+        this.modelData = modelData;
+        if (this.modelData.isDisplayDeletedUserList ( ))
+            System.out.println ("All deleted users:");
+        else
+            System.out.println ("All users:");
         List<User> users = modelData.getUsers ( );
         for (User u : users)
             {
-                System.out.println ("\t"+u);
+                System.out.println ("\t" + u);
             }
-        System.out.println ("==================================================");
-
+        System.out.println ("===================================================");
         }
 
     @Override
@@ -35,9 +37,18 @@ public class UsersView implements View
         this.controller = controller;
         }
 
-    public  void fireEventShowAllUsers()
+    public void fireEventShowAllUsers()
         {
-        controller.onShowAllUsers ();
+        controller.onShowAllUsers ( );
         }
 
+    public void fireEventShowDeletedUsers()
+        {
+        controller.onShowAllDeletedUsers ( );
+        }
+
+    public void fireEventOpenUserEditForm(long id)
+        {
+        controller.onOpenUserEditForm (id);
+        }
 }

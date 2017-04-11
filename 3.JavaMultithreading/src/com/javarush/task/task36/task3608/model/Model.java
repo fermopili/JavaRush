@@ -7,4 +7,8 @@ public interface Model
 {
     ModelData getModelData();
     void loadUsers();
+    void loadDeletedUsers();
+    void loadUserById(long userId);
+    void deleteUserById(long userId);/// 8
+    void changeUserData(String name, long id, int level);
 }
