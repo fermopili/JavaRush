@@ -18,6 +18,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*
 public class Solution
@@ -45,109 +47,62 @@ public class Solution
         reader.close ( );
         bufferedReader.close ( );
         }
-
-
 }
 */
 public class Solution
 {
+
     public static void main(String[] args) throws Exception
         {
-        //Читаем имя файла и сам файл в строку
-        String tag = args[0];
-       tag = "span";
-        BufferedReader bf    = new BufferedReader (new InputStreamReader (System.in));
-        String         nameF = bf.readLine ( );
-       nameF = "c:/3";
-        BufferedReader bufferedReader = new BufferedReader (new FileReader (nameF));
-        String         fileContent    = "";
-        String         s;
-        while (bufferedReader.ready ( ))
+        BufferedReader a = new BufferedReader (new InputStreamReader (System.in));
+        String         f = a.readLine ( );
+        a.close ( );
+        BufferedReader b = new BufferedReader (new FileReader (f));
+        String         c = "";
+        while (b.ready ( ))
             {
-                s = bufferedReader.readLine ( );
-                //  s=s.substring (s.indexOf (openTag)); // обрезать ненужное спереди
-                //  s = s.replaceAll("\\n|\\r", "");
-                fileContent = fileContent + s;
-
-             //   System.out.println (s);
+                c = c + b.readLine ( );
             }
-
-        //проходимся по всем сабстрингам с фиксированным конечным индексом и возврастающимся начальным индексом на +1
-        //если сабстринг находит тэг начала или закрытия, вносит в соответствующий список его индекс (начальный)
-        ArrayList<Integer> openList  = new ArrayList<> ( );
-        ArrayList<Integer> closeList = new ArrayList<> ( );
-        String             sub       = fileContent;
-        for (int i = 0; i < fileContent.length ( ); i++)
+        b.close ( );
+        // Заменяем <span> на <span > чтобы не искать по подстроке. Потом вернем обратно
+        c = c.replace ("<" + args[0] + ">", "<" + args[0] + " >");
+        // Сколько пар тегов в файле
+        int     count = 0;
+        Pattern p     = Pattern.compile ("</" + args[0] + ">");
+        Matcher m     = p.matcher (c);
+        while (m.find ( ))
+            count++;
+        // Если открывающийся тег, заносим в мапу индекс тега со значением null.
+        // Если закрывающийся тег, то ищем последний элемент мапы с null и пищем туда индекс тега
+        Map<Integer, Integer> map = new TreeMap<> ( );
+        int                   pos = -1;
+        for (int i = 0; i < count * 2; i++)
             {
-                sub = fileContent.substring (i, fileContent.length ( ));
-                if (!openList.contains (sub.indexOf ("<" + tag) + i) && sub.contains ("<" + tag))
+                int posTagBegin = c.indexOf ("<" + args[0] + " ", pos + 1);
+                int posTagEnd   = c.indexOf ("</" + args[0] + ">", pos + 1);
+                if (posTagBegin >= 0 && posTagBegin < posTagEnd)
                     {
-                        openList.add (sub.indexOf ("<" + tag) + i);
+                        pos = posTagBegin;
+                        map.put (posTagBegin, null);
                     }
-                if (!closeList.contains (sub.indexOf ("</" + tag) + i) && sub.contains ("</" + tag))
+                else
                     {
-                        closeList.add (sub.indexOf ("</" + tag) + i);
-                    }
-            }
-        //Вносим все значения индексов начало тэгов в один список и сортируем
-        //Нужно для понятия, какой индекс тэга начала соответствует индекс тэга закрытия
-        ArrayList<Integer> sortList = new ArrayList<> (openList);
-        sortList.addAll (closeList);
-        Collections.sort (sortList);
-        //редактируем список индексов тэгов начала приводя его к длине обьедененного списка
-        //и заполняя пробелы (места индексов тэгов закрытия) 0-ями (маркируем эти индексы)
-        ArrayList<Integer> openSortList = new ArrayList<> ( );
-        openSortList.addAll (sortList);
-        for (int i = 0; i < openSortList.size ( ); i++)
-            {
-                if (!openList.contains (openSortList.get (i)))
-                    {
-                        openSortList.set (i, 0);
-                    }
-            }
-        //редактируем список индексов тэгов закрытия приводя его к длине обьедененного списка
-        //и заполняя пробелы (места индексов тэгов открытия) 0-ями (маркируем эти индексы)
-        ArrayList<Integer> closeSortList = new ArrayList<> ( );
-        closeSortList.addAll (sortList);
-        for (int i = 0; i < closeSortList.size ( ); i++)
-            {
-                if (!closeList.contains (closeSortList.get (i)))
-                    {
-                        closeSortList.set (i, 0);
-                    }
-            }
-        //находим пары открытия-закрытия и вносим в мапу.
-        //число 0-ей в списке индексов тэгов закрытия служат маркером того, сколько позиций отделяют тэг открытия
-        //от его пары, тэга закрытия. Если же на месте индекса тэга открытия 0, то цикл продолжается, пока не будет не равен 0.
-        int                       count = 0;
-        HashMap<Integer, Integer> map   = new HashMap<> ( );
-        outterLoop:
-        for (int i = 0; i < openSortList.size ( ); i++)
-            {
-                for (int j = i; j < closeSortList.size ( ); j++)
-                    {
-                        if (closeSortList.get (j) == 0)
+                        ArrayList<Integer> keys = new ArrayList<> (map.keySet ( ));
+                        for (int j = keys.size ( ) - 1; j >= 0; j--)
                             {
-                                count++;
+                                if (map.get (keys.get (j)) == null)
+                                    {
+                                        map.put (keys.get (j), posTagEnd);
+                                        break;
+                                    }
                             }
-                        else if (openSortList.get (i) != 0)
-                            {
-                                map.put (openSortList.get (i), closeSortList.get (i + 1 + 2 * (count - 1)));
-                                count = 0;
-                                continue outterLoop;
-                            }
-                        else
-                            {
-                                continue outterLoop;
-                            }
+                        pos = posTagEnd;
                     }
             }
-        //выводим на экран сабстринг (так как индекс тэга закрытия его начальный индекс, находим его конечный индекс).
-        for (Map.Entry<Integer, Integer> pair : map.entrySet ( ))
+        // Вывод
+        for (Map.Entry<Integer, Integer> entry : map.entrySet ( ))
             {
-                System.out.println (fileContent.substring (pair.getKey ( ), pair.getValue ( ) + tag.length ( ) + 3));
+                System.out.println (c.substring (entry.getKey ( ), entry.getValue ( ) + args[0].length ( ) + 3).replace ("<" + args[0] + " >", "<" + args[0] + ">"));
             }
-        bf.close ( );
-        bufferedReader.close ( );
         }
 }
