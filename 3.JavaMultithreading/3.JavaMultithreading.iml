@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="2.JavaCore" />
     <orderEntry type="module" module-name="2.JavaCore" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.8.0.rc1" level="application" />
   </component>
 </module>

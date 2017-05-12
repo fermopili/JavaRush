@@ -20,7 +20,7 @@ public class VideoSelectedEventDataRow implements EventDataRow
         this.optimalVideoSet = optimalVideoSet;
         this.amount = amount;
         this.totalDuration = totalDuration;
-        currentDate=new Date ();
+        currentDate = new Date ( );
         }
 
     @Override
@@ -28,4 +28,22 @@ public class VideoSelectedEventDataRow implements EventDataRow
         {
         return EventType.SELECTED_VIDEOS;
         }
+
+
+    public Date getDate()
+        {
+        return currentDate;
+        }
+
+
+    public int getTime()
+        {
+        return totalDuration;
+        }
+
+    public long getAmount()
+        {
+        return amount;
+        }
+
 }

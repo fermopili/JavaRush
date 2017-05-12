@@ -3,98 +3,109 @@ package com.javarush.task.task20.task2025;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /*
 Алгоритмы-числа
 */
 public class Solution
 {
-    public static long[] getNumbers(long N)
+    public static int[] getNumbers(long N)
         {
-        ArrayList<Long> list = new ArrayList<> ( );
-        long[]          result;// ={};// new long[0];
+        int[]         result      = null;
+        List<Integer> result_list = new LinkedList<> ( );
+        List<Integer> s_mass;
+        int           tmp;
+        int           i;
 
-        for (long i = 0; i <= N; i++)
+        for (i = 1; i < N; i++)
             {
-                if (i== 0)
-                continue;
-                if ((i > 0) && (i < 10))
+                s_mass = digits (i);
+                tmp = 0;
+                for (int s_mass_element : s_mass)
                     {
-                        list.add (i);
-                        continue;
+                        tmp += pow (s_mass_element, s_mass.size ( ));
                     }
-                long k = i;
-                // calculate lenght number
-                int ln = 0;
-                do
-                    {
-                        k = k / 10;
-                        ln++;
-                    } while (k != 0);
-                k = i;
-                long summa = 0;
-                do
-                    {
-                        int digit = (int) (k % 10);
-                        switch (digit)
-                            {
-                            case 0:
-                                break;
-                            case 1:
-                                summa = summa + 1;
-                                break;
-                            case 2:
-                                summa = summa + (2 << ln);
-                                break;
-                            case 4:
-                                summa = summa + (2 << (ln * 2));
-                                break;
-                            case 8:
-                                summa = summa + (2 << (ln * 3));
-                                break;
-                            case 3:
-                            case 5:
-                            case 6:
-                            case 7:
-                            case 9:
-                                summa = summa + (long) Math.pow (digit, ln);
-                                break;
-                            }
-                        // System.out.print (digit + " ");
-                        k = k / 10;
-                    } while (k != 0);
-                if (summa == i)
-                    list.add (i);
+                if (tmp == i)
+                    result_list.add (i);
             }
 
-        result = new long[list.size ( )];
-        for (int i = 0; i < list.size ( ); i++)
-            result[i] = list.get (i);
+        if (result_list.size ( ) > 0)
+            {
+                result = new int[result_list.size ( )];
+                for (i = 0; i < result_list.size ( ); i++)
+                    {
+                        result[i] = result_list.get (i);
+                    }
+            }
         return result;
         }
 
-    public static void main(String[] args) throws IOException
+    public static int[] getNumbersSimple(int N)
         {
-        //  BufferedReader reader = new BufferedReader (new InputStreamReader (System.in))
-        //    long           N      = Long.parseLong (reader.readLine ( ));
-        long memoryStart = Runtime.getRuntime().freeMemory();
-        long startTime = System.currentTimeMillis();
-
-        long[] M = getNumbers (Long.MAX_VALUE/20002);
-        for (int i = 0; i < M.length; i++)
-            System.out.println (M[i]);
-
-        System.out.println();
-        long estimatedTime = System.currentTimeMillis() - startTime;
-        long totalMem = Runtime.getRuntime().totalMemory();
-        long freeMem = Runtime.getRuntime().freeMemory();
-        System.out.println();
-        System.out.println(String.format("Mem : %.2f  Mb.", 1.0 * (totalMem - memoryStart )/ (1024 * 1024)));
-        System.out.println(String.format("Time: %.3f sec.", estimatedTime / 1000.0));
-
-
+        int[]         numbers = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1634, 8208, 9474, 54748, 92727, 93084, 548834, 1741725, 4210818, 9800817, 9926315, 24678050, 24678051, 88593477, 146511208, 472335975, 534494836, 912985153};
+        List<Integer> list    = new LinkedList<> ( );
+        for (int number : numbers)
+            {
+                if (number < N)
+                    list.add (number);
+            }
+        int[] result = new int[list.size ( )];
+        for (int i = 0; i < list.size ( ); i++)
+            result[i] = list.get (i);
+        return result;
 
         }
+
+    public static int pow(int base, int exponent)
+        {
+        if (exponent == 0)
+            return 1;
+
+        else if (exponent == 1)
+            return base;
+
+        else
+            {
+                int     loop_count = exponent / 2;
+                boolean extra      = ((exponent % 2) == 1);
+                int     result     = base;
+
+                while (loop_count-- > 0)
+                    result *= result;
+
+                if (extra)
+                    result *= base;
+
+                return result;
+            }
+        }
+
+    public static List<Integer> digits(int i)
+        {
+        List<Integer> digits = new LinkedList<> ( );
+        while (i > 0)
+            {
+                digits.add (0, i % 10);
+                i /= 10;
+            }
+        return digits;
+        }
+
+    public static void main(String[] args)
+        {
+        Long  t0      = System.currentTimeMillis ( );
+        long   n       = 21474672;
+        int[] numbers = getNumbers (n);
+        Long  t1      = System.currentTimeMillis ( );
+        System.out.println ("time: " + (t1 - t0) / 1000d + " sec");
+        System.out.println ("memory: " + (Runtime.getRuntime ( ).totalMemory ( ) - Runtime.getRuntime ( ).freeMemory ( )) / (1024 * 1024) + " mb");
+        for (int i = 0; i < numbers.length; i++)
+            {
+                //System.out.print (numbers[i] + ", ");
+                System.out.print (numbers[i]+ " ");
+            }
+        System.out.println ( );
+        }
 }
+
