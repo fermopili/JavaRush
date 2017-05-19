@@ -3,6 +3,7 @@ package com.javarush.task.task31.task3106;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -11,47 +12,47 @@ import java.util.zip.ZipInputStream;
 /*
 Разархивируем файл
 */
+
+
 public class Solution
 {
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args)
         {
-
-        String     outputFileName = args[0];
-        List<File> parts          = new ArrayList<> ( );
-        for (int i = 1; i <  args.length; i++)
+        try (FileOutputStream out = new FileOutputStream (args[0]))
             {
-                parts.add (new File (args[i]));
-            }
-
-        Collections.sort (parts);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream ( );
-
-        for (File part : parts)
-            {
-                Files.copy (part.toPath ( ), byteArrayOutputStream);
-            }
-
-        ZipInputStream zipInputStream = new ZipInputStream (new ByteArrayInputStream (byteArrayOutputStream.toByteArray ( )));
-        ZipEntry       zipEntry = zipInputStream.getNextEntry ( );
-
-        FileOutputStream fileOutputStream = new FileOutputStream (outputFileName);
-        if (zipEntry != null)
-            {
-                byte[] buffer = new byte[1024]; //size selected for buffer to avoid out of memory
-                int    len;
-                System.out.println (zipEntry.getSize ( ));
-                System.out.println ((int) zipEntry.getSize ( ));
-                while ((len = zipInputStream.read (buffer)) > 0)
+                List<String> fileParts = Arrays.asList (args).subList (1, args.length);
+                Collections.sort (fileParts);
+                List<InputStream> streams = new ArrayList<> ( );
+                for (String part : fileParts)
                     {
-                        fileOutputStream.write (buffer, 0, len);
+                        streams.add (new FileInputStream (part));
                     }
-                fileOutputStream.flush ( );
-                fileOutputStream.close ( );
+                SequenceInputStream seq = new SequenceInputStream (Collections.enumeration (streams));
+                ZipInputStream      zis = new ZipInputStream (seq);
+
+                int      len;
+                byte[]   buf      = new byte[8 * 1024];
+                ZipEntry zipEntry = zis.getNextEntry ( );
+                while (zipEntry != null)
+                    {
+                        while ((len = zis.read (buf)) > 0)
+                            {
+                                out.write (buf, 0, len);
+                            }
+                        zipEntry = zis.getNextEntry ( );
+                    }
+                seq.close ( );
+                zis.close ( );
+            }
+        catch (FileNotFoundException e)
+            {
+                e.printStackTrace ( );
+            }
+        catch (IOException e)
+            {
+                e.printStackTrace ( );
             }
 
-        zipInputStream.closeEntry ( );
-        zipInputStream.close ( );
-        byteArrayOutputStream.close ( );
         }
 }
+

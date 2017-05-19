@@ -8,6 +8,7 @@ import java.util.*;
 /*
 Алгоритмы-числа
 */
+
 public class Solution
 {
     public static int[] getNumbers(long N)
@@ -17,7 +18,6 @@ public class Solution
         List<Integer> s_mass;
         int           tmp;
         int           i;
-
         for (i = 1; i < N; i++)
             {
                 s_mass = digits (i);
@@ -40,7 +40,6 @@ public class Solution
             }
         return result;
         }
-
     public static int[] getNumbersSimple(int N)
         {
         int[]         numbers = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1634, 8208, 9474, 54748, 92727, 93084, 548834, 1741725, 4210818, 9800817, 9926315, 24678050, 24678051, 88593477, 146511208, 472335975, 534494836, 912985153};
@@ -56,7 +55,6 @@ public class Solution
         return result;
 
         }
-
     public static int pow(int base, int exponent)
         {
         if (exponent == 0)
@@ -108,4 +106,3 @@ public class Solution
         System.out.println ( );
         }
 }
-

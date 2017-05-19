@@ -1,5 +1,7 @@
 package com.javarush.task.task32.task3208;
 
+import java.io.IOException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -46,28 +48,29 @@ public class Solution
     //pretend we start rmi server as SERVER_THREAD thread
     public static Thread SERVER_THREAD = new Thread (new Runnable ( )
     {
-        @Override
+
         public void run()
             {
-            //напишите тут ваш код
-
             try
-                {    Registry registry = LocateRegistry.createRegistry (2099);
-                    final  Cat cat = new Cat ("catName");
-                    final Dog dog = new Dog ("dogName");
-
-
-                    Remote catStub = UnicastRemoteObject.exportObject (cat, 0);
-                    Remote dogStub = UnicastRemoteObject.exportObject (dog, 0);
-                    registry.bind (CAT_BINDING_NAME, catStub);
-                    registry.bind (DOG_BINDING_NAME, dogStub);
+                {
+                    registry = LocateRegistry.createRegistry (2099);
+                    final Cat cat     = new Cat ("meow");
+                    final Dog dog     = new Dog ("woof");
+                    Remote       stubCat = UnicastRemoteObject.exportObject (cat, 0);
+                    Remote       stubDog = UnicastRemoteObject.exportObject (dog, 0);
+                    registry.bind ("meow", stubCat);
+                    registry.bind ("woof", stubDog);
                 }
 
-
-            catch (Exception e)
+            catch (RemoteException e)
                 {
                     e.printStackTrace ();
-
+                }
+            catch (AlreadyBoundException e)
+                {  e.printStackTrace ();
+                }
+            catch (IOException e)
+                {  e.printStackTrace ();
                 }
             }
     });
