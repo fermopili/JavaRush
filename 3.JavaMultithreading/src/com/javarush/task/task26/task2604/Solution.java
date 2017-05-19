@@ -42,7 +42,7 @@ public class Solution extends Thread
             @Override
             public void run()
                 {
-                System.out.println ("test JavaRush Runnable for Solution class");
+                System.out.println ("tests JavaRush Runnable for Solution class");
                 }
         }).start ( );
 

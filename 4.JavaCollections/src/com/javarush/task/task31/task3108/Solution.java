@@ -11,8 +11,8 @@ public class Solution
 {
     public static void main(String[] args) throws IOException
         {
-        Path path1      = Paths.get ("D:/test/data/firstDir");
-        Path path2      = Paths.get ("D:/test/data/secondDir/third");
+        Path path1      = Paths.get ("D:/tests/data/firstDir");
+        Path path2      = Paths.get ("D:/tests/data/secondDir/third");
         Path resultPath = getDiffBetweenTwoPaths (path1, path2);
         System.out.println (resultPath);   //expected output '../secondDir/third' or '..\secondDir\third'
         }

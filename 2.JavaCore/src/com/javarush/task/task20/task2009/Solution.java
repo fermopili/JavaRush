@@ -9,7 +9,7 @@ public class Solution
 {
     public static class ClassWithStatic implements Serializable
     {
-        public static String staticString = "it's test static string";
+        public static String staticString = "it's tests static string";
         public int i;
         public int j;
         public static void serializeStatic(ObjectOutputStream oos) throws IOException

@@ -6,7 +6,7 @@ package com.javarush.task.task34.task3408;
 public class Solution {
     public static void main(String[] args) throws Exception {
         SomeKey someKey = new SomeKey();
-        someKey.name = "test";
+        someKey.name = "tests";
 
         SomeKey someKeyNew = new SomeKey();
         someKeyNew.name = "testNew";
@@ -24,7 +24,7 @@ public class Solution {
 
         System.out.println(cache.size());
         /* expected output:
-        SomeValue{myKey=SomeKey{name='test'}}
+        SomeValue{myKey=SomeKey{name='tests'}}
         SomeValue{myKey=SomeKey{name='testNew'}}
         2
          */
