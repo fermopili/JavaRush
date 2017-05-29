@@ -34,7 +34,7 @@ public class Solution
         {
         Solution solution = new Solution ( );
         solution.recursion ("sin(2*(-5+1.5*4)+28)", 0); //expected output 0.5 6
-
+/*
         String s = "sin(2*(-5+1.5*4)+28)";
         System.out.print(s + " expected output 0.5 6 actually ");
         solution.recursion(s, 0);
@@ -131,7 +131,7 @@ public class Solution
         s = "0+0.304";
         System.out.print(s + " expected output 0.3 1 actually ");
         solution.recursion(s, 0);
-
+*/
         }
 
     public void recursion(final String expression, int countOperation)
